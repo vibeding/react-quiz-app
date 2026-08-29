@@ -11,6 +11,16 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
+  /* Feedback colors for quiz answers -- kept as their own variables (rather
+     than reusing --accent) so "correct" and "incorrect" stay visually
+     distinct from the app's regular accent color in both themes. */
+  --correct-bg: #d1fae5;
+  --correct-text: #065f46;
+  --correct-border: #34d399;
+  --incorrect-bg: #fee2e2;
+  --incorrect-text: #991b1b;
+  --incorrect-border: #f87171;
+
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -30,8 +40,19 @@
   }
 }
 
+/* Dark theme values are defined twice on purpose:
+   1. Inside the media query, so visitors who haven't made an explicit
+      choice yet (no data-theme="light" override) still get dark mode for
+      free when their OS is set to dark.
+   2. Under the plain [data-theme='dark'] selector below, so a user who
+      explicitly picked dark mode via ThemeToggle stays in dark mode even
+      if their OS preference is light.
+   The blocking script in index.html sets data-theme on every load before
+   this CSS ever gets evaluated, so in practice branch 2 is what normally
+   applies -- branch 1 mainly exists as a safety net (e.g. if JavaScript
+   were ever disabled). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --text: #9ca3af;
     --text-h: #f3f4f6;
     --bg: #16171d;
@@ -43,15 +64,63 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --correct-bg: rgba(16, 185, 129, 0.2);
+    --correct-text: #6ee7b9;
+    --correct-border: #34d399;
+    --incorrect-bg: rgba(248, 113, 113, 0.2);
+    --incorrect-text: #fca5a5;
+    --incorrect-border: #f87171;
   }
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root[data-theme='dark'] {
+  --text: #9ca3af;
+  --text-h: #f3f4f6;
+  --bg: #16171d;
+  --border: #2e303a;
+  --code-bg: #1f2028;
+  --accent: #c084fc;
+  --accent-bg: rgba(192, 132, 252, 0.15);
+  --accent-border: rgba(192, 132, 252, 0.5);
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  --correct-bg: rgba(16, 185, 129, 0.2);
+  --correct-text: #6ee7b9;
+  --correct-border: #34d399;
+  --incorrect-bg: rgba(248, 113, 113, 0.2);
+  --incorrect-text: #fca5a5;
+  --incorrect-border: #f87171;
 }
 
 body {
   margin: 0;
+  /* A simple, theme-aware decorative background: two soft radial glows
+     built from the existing --accent-bg variable, layered over the base
+     --bg color. Because both variables already flip between light/dark,
+     this background automatically looks right in either theme with no
+     extra rules. */
+  background:
+    radial-gradient(circle at 15% -10%, var(--accent-bg), transparent 55%),
+    radial-gradient(circle at 100% 110%, var(--accent-bg), transparent 55%),
+    var(--bg);
+  min-height: 100svh;
+}
+
+/* Visually hides content while keeping it available to screen readers --
+   used for the quiz's live status announcements and for extra context
+   text on answer buttons (e.g. "-- correct answer") that sighted users
+   don't need because color/icons already show it to them. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 #root {
@@ -95,15 +164,11 @@ p {
   margin: 0;
 }
 
-code,
-.counter {
+code {
   font-family: var(--mono);
   display: inline-flex;
   border-radius: 4px;
   color: var(--text-h);
-}
-
-code {
   font-size: 15px;
   line-height: 135%;
   padding: 4px 8px;

@@ -4,7 +4,25 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>quiz-app</title>
+    <title>QuizDing</title>
+    <script>
+      // This tiny script runs synchronously, before anything else on the
+      // page (including React) loads. Its only job is to set the
+      // data-theme attribute as early as possible so the correct colors
+      // are used on the very first paint -- without it, the page would
+      // briefly flash the light theme (or vice versa) before React mounts
+      // and applies the user's real preference. It duplicates the same
+      // "stored preference, falling back to OS preference" logic found in
+      // ThemeToggle.jsx, since it has to run before that component exists.
+      ;(function setInitialTheme() {
+        var storedTheme = localStorage.getItem('quizding-theme')
+        var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        var initialTheme = storedTheme === 'light' || storedTheme === 'dark'
+          ? storedTheme
+          : systemPrefersDark ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', initialTheme)
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

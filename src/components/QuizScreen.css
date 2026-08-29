@@ -1,0 +1,150 @@
+.quiz-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
+  padding: 32px 20px;
+  box-sizing: border-box;
+}
+
+.quiz-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.question-card {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.question-text {
+  font-size: 20px;
+  color: var(--text-h);
+}
+
+.answer-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 1024px) {
+  .answer-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.answer-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 8px;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    opacity 0.2s;
+}
+
+.answer-option:hover {
+  border-color: var(--accent-border);
+}
+
+.answer-option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.answer-option.correct {
+  background: var(--correct-bg);
+  color: var(--correct-text);
+  border-color: var(--correct-border);
+}
+
+.answer-option.incorrect {
+  background: var(--incorrect-bg);
+  color: var(--incorrect-text);
+  border-color: var(--incorrect-border);
+  opacity: 0.85;
+}
+
+/* The two untouched wrong options, once a question has been answered --
+   dimmed (but still legible) to show they're no longer actionable, without
+   removing them from the tab order via the native `disabled` attribute. */
+.answer-option[aria-disabled='true']:not(.correct):not(.incorrect) {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.answer-icon {
+  font-weight: 700;
+}
+
+.next-question-button {
+  font: inherit;
+  padding: 10px 24px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.next-question-button:hover {
+  opacity: 0.9;
+}
+
+.next-question-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.summary-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-score {
+  font-size: 20px;
+  color: var(--text-h);
+}
+
+.summary-perfect {
+  font-size: 18px;
+}
+
+.play-again-button {
+  font: inherit;
+  padding: 10px 24px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.play-again-button:hover {
+  opacity: 0.9;
+}
+
+.play-again-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
