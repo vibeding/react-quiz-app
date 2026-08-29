@@ -30,18 +30,22 @@ function TitleScreen({ onStart }) {
       </p>
 
       <div className="difficulty-picker">
-        <label htmlFor="difficulty-select">Difficulty</label>
-        <select
-          id="difficulty-select"
-          value={selectedDifficulty}
-          onChange={(event) => setSelectedDifficulty(event.target.value)}
-        >
+        <span className="difficulty-picker-label">Difficulty</span>
+        <div className="difficulty-picker-options" role="group" aria-label="Difficulty">
           {DIFFICULTY_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
+            <button
+              key={option.value}
+              type="button"
+              className={
+                'difficulty-option' + (option.value === selectedDifficulty ? ' selected' : '')
+              }
+              aria-pressed={option.value === selectedDifficulty}
+              onClick={() => setSelectedDifficulty(option.value)}
+            >
               {option.label}
-            </option>
+            </button>
           ))}
-        </select>
+        </div>
       </div>
 
       <button type="button" className="start-quiz-button" onClick={handleStartClick}>

@@ -27,21 +27,41 @@
   gap: 6px;
 }
 
-.difficulty-picker label {
+.difficulty-picker-label {
   font-size: 14px;
   color: var(--text);
 }
 
-.difficulty-picker select {
+.difficulty-picker-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.difficulty-option {
   font: inherit;
-  padding: 8px 12px;
+  font-size: 14px;
+  padding: 8px 16px;
   border-radius: 6px;
   color: var(--text-h);
   background: var(--bg);
   border: 2px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
 
-.difficulty-picker select:focus-visible {
+.difficulty-option:hover {
+  border-color: var(--accent-border);
+}
+
+.difficulty-option.selected {
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+
+.difficulty-option:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
