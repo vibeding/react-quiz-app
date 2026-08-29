@@ -4,6 +4,8 @@ A little trivia quiz app built with React and Vite. Pick a difficulty, answer 5 
 
 This started life as a Scrimba React exercise and grew from there.
 
+Run it here: https://tkd-react-quiz-app.netlify.app/
+
 ## Running it locally
 
 ```bash
